@@ -11,7 +11,8 @@
     {
         <li class="list-group-item">
             @fileName
-            <a asp-action="DeleteFile" asp-controller="AWSFiles" class="btn btn-danger">
+            <a asp-action="DeleteFile" asp-controller="AWSFiles" 
+            asp-route-fileName="@fileName" class="btn btn-danger">
                 Eliminar archivo
             </a>
         </li>
