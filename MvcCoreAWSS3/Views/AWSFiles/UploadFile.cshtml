@@ -1,0 +1,12 @@
+﻿<h1>Subir un fichero</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <label>Seleccione un archivo</label>    
+    <input type="file" name="file" class="form-control" />
+    <br />
+    <button class="btn btn-outline-success">Subir!</button>
+</form>
+
+<a asp-action="Index" asp-controller="AWSFiles" class="btn btn-dark">
+    Volver
+</a>

@@ -1,0 +1,20 @@
+﻿@model List<string>
+
+    <h1>AWS Storage S3</h1>
+
+<a asp-action="UploadFile" asp-controller="AWSFiles" class="btn btn-dark">
+    Subir archivo
+</a>
+
+<ul class="list-group">
+    @foreach(string fileName in Model)
+    {
+        <li class="list-group-item">
+            @fileName
+            <a asp-action="DeleteFile" asp-controller="AWSFiles" class="btn btn-danger">
+                Eliminar archivo
+            </a>
+        </li>
+    }
+
+</ul>
