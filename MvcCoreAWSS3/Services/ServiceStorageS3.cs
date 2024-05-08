@@ -85,6 +85,20 @@ namespace MvcCoreAWSS3.Services
             return keyFiles;
         }
 
+        public async Task<byte[]> GetFileAsync(string key)
+        {
+            GetObjectRequest request = new GetObjectRequest
+            {
+                BucketName = this.BucketName,
+                Key = key
+            };
 
+            using (GetObjectResponse response = await this.ClientS3.GetObjectAsync(request))
+            using (var memoryStream = new System.IO.MemoryStream())
+            {
+                await response.ResponseStream.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
     }
 }

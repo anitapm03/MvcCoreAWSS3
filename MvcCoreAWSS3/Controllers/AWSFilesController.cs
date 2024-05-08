@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.S3;
+using Microsoft.AspNetCore.Mvc;
 using MvcCoreAWSS3.Services;
 
 namespace MvcCoreAWSS3.Controllers
@@ -6,10 +7,13 @@ namespace MvcCoreAWSS3.Controllers
     public class AWSFilesController : Controller
     {
         private ServiceStorageS3 service;
+        private readonly IConfiguration config;
 
-        public AWSFilesController (ServiceStorageS3 service)
+        public AWSFilesController(ServiceStorageS3 service,
+            IConfiguration config)
         {
             this.service = service;
+            this.config = config;
         }
 
         public async Task<IActionResult> Index()
@@ -30,7 +34,7 @@ namespace MvcCoreAWSS3.Controllers
         {
             string fileName = file.FileName;
 
-            using(Stream stream = file.OpenReadStream())
+            using (Stream stream = file.OpenReadStream())
             {
                 await this.service.UploadFileAsync(fileName, stream);
             }
@@ -43,5 +47,28 @@ namespace MvcCoreAWSS3.Controllers
             await this.service.DeleteFileAsync(fileName);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> GetImagen(string key)
+        {
+            try
+            {
+                var imageBytes = await this.service.GetFileAsync(key);
+                return File(imageBytes, "image/jpeg"); // Puedes cambiar el tipo MIME según el tipo de imagen
+            }
+            catch
+            {
+                return NotFound(); // Maneja el error como desees
+            }
+        }
+        /*
+         ??????????
+        public async Task<IActionResult> GetFile(string key)
+    {
+        
+        var fileStream = await this.service.GetFileAsync(key);
+        return File(fileStream, "application/octet-stream", key);
+        
+    }
+         */
     }
 }

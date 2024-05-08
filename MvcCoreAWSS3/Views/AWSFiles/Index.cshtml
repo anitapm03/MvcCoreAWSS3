@@ -1,6 +1,10 @@
 ﻿@model List<string>
 
-    <h1>AWS Storage S3</h1>
+@{
+    var bucketUrl = Configuration["AWS:BucketURL"];
+}
+
+<h1>AWS Storage S3</h1>
 
 <a asp-action="UploadFile" asp-controller="AWSFiles" class="btn btn-dark">
     Subir archivo
@@ -11,9 +15,17 @@
     {
         <li class="list-group-item">
             @fileName
+            @{
+                string url = bucketUrl + fileName;
+            }
+            <img src="@url" style="width:100xp;height:100px"/>
             <a asp-action="DeleteFile" asp-controller="AWSFiles" 
             asp-route-fileName="@fileName" class="btn btn-danger">
                 Eliminar archivo
+            </a>
+            <a asp-action="GetImagen" asp-controller="AWSFiles"
+               asp-route-key="@fileName" class="btn btn-info">
+                Get archivo
             </a>
         </li>
     }

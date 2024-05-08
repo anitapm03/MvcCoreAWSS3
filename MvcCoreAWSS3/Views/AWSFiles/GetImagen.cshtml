@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Imagen desde S3";
+}
+
+<h1>Imagen desde S3</h1>
+
+<img src="@Url.Action("GetImage", "S3", 
+new { key = "nombre-de-la-imagen.jpg" })"
+alt="Imagen desde S3" />
+
